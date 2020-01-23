@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Inet4Address;
 import java.net.Socket;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,12 +34,13 @@ public class HiloParaAntenderUnCliente extends Thread {
     public void run() {
         InputStream is = null;
         OutputStream os = null;
+        Random random = new Random();
         int number;
-        int numberToguess = 34;
-        int numberHot = 24;
-        int numberHot2 = 44;
-        int numberTooHot = 30;
-        int numberTooHot2 = 38;
+        int numberToGuess = random.nextInt(101);
+        int numberHot = numberToGuess - 10;
+        int numberHot2 = numberToGuess + 10;
+        int numberTooHot = numberToGuess - 4;
+        int numberTooHot2 = numberToGuess + 4;
         try {
             is = sk.getInputStream();
             InputStreamReader isr = new InputStreamReader(is);
@@ -56,7 +58,7 @@ public class HiloParaAntenderUnCliente extends Thread {
                 String linea = br.readLine();
                 System.out.println(laIP + ": " + linea);
                 number = Integer.parseInt(linea);
-                if (number == numberToguess) {
+                if (number == numberToGuess) {
                     bw.flush();
                     bw.write("Congratulations. You have guessed the number");
                 
@@ -81,12 +83,12 @@ public class HiloParaAntenderUnCliente extends Thread {
                     bw.write("Hot");
                     
                 }
-                if (number < numberToguess && number >= numberTooHot) {
+                if (number < numberToGuess && number >= numberTooHot) {
                     bw.flush();
                     bw.write("Very Hot");
                     
                 }
-                if (number > numberToguess && number <= numberTooHot2) {
+                if (number > numberToGuess && number <= numberTooHot2) {
                     bw.flush();
                     bw.write("Very Hot");
                     
